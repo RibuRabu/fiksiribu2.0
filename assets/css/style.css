@@ -12,9 +12,9 @@
   --text-muted: #a89ca6;
   --text-dark: #181319;
   --text-dark-soft: #534954;
-  --accent: #f08cb2;
-  --accent-strong: #ff9fc2;
-  --accent-shadow: rgba(240, 140, 178, 0.28);
+  --accent: #df0f8d;
+  --accent-strong: #ee79ba;
+  --accent-shadow: rgba(223, 15, 141, 0.36);
   --max-width: 72rem;
   --radius-xl: 2rem;
   --radius-lg: 1.75rem;
@@ -253,7 +253,7 @@ h3 {
 }
 .button-primary {
   background: var(--accent);
-  color: #23141f;
+  color: #ffffff;
   box-shadow: 0 14px 30px var(--accent-shadow);
 }
 .button-primary:hover,
@@ -463,3 +463,4 @@ button:focus-visible {
     padding: 2.4rem;
   }
 }
+
