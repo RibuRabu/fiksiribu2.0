@@ -1,26 +1,32 @@
 ﻿:root {
-  --bg: #0b0b0f;
-  --bg-strong: #09090c;
-  --bg-header: rgba(11, 11, 15, 0.94);
-  --surface: #f4f1f3;
-  --surface-strong: #ffffff;
-  --surface-alt: #ebe6ea;
-  --surface-border: rgba(255, 255, 255, 0.1);
-  --surface-line: rgba(17, 15, 21, 0.1);
-  --text: #f5f2f4;
-  --text-soft: #d2c7cf;
-  --text-muted: #a89ca6;
-  --text-dark: #181319;
-  --text-dark-soft: #534954;
-  --accent: #df0f8d;
-  --accent-strong: #ee79ba;
-  --accent-shadow: rgba(223, 15, 141, 0.36);
+  --bg: #050505;
+  --bg-soft: #0D0D10;
+  --surface: #17171C;
+  --surface-2: #23232A;
+  --accent: #E000A8;
+  --accent-hover: #FF38D1;
+  --accent-purple: #B100FF;
+  --text: #F4F4F6;
+  --text-soft: #CFCFD4;
+  --text-muted: #9B9BA3;
+  --border: rgba(255, 255, 255, .08);
+  --shadow: 0 18px 45px rgba(224, 0, 168, .22);
+  --bg-strong: var(--bg);
+  --bg-header: rgba(5, 5, 5, 0.94);
+  --surface-strong: var(--surface-2);
+  --surface-alt: var(--bg-soft);
+  --surface-border: var(--border);
+  --surface-line: var(--border);
+  --text-dark: var(--text);
+  --text-dark-soft: var(--text-soft);
+  --accent-strong: var(--accent-hover);
+  --accent-shadow: rgba(224, 0, 168, .22);
   --max-width: 72rem;
   --radius-xl: 2rem;
   --radius-lg: 1.75rem;
   --radius-md: 1.1rem;
-  --shadow-soft: 0 24px 60px rgba(0, 0, 0, 0.26);
-  --shadow-card: 0 18px 42px rgba(0, 0, 0, 0.18);
+  --shadow-soft: 0 24px 60px rgba(177, 0, 255, .12);
+  --shadow-card: var(--shadow);
 }
 *,
 *::before,
@@ -34,7 +40,10 @@ body {
   margin: 0;
   min-width: 320px;
   font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-  background: var(--bg);
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(circle at 50% -10%, rgba(224, 0, 168, 0.18) 0, rgba(224, 0, 168, 0.08) 18%, rgba(5, 5, 5, 0) 42%),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg-soft) 100%);
   color: var(--text);
   line-height: 1.6;
 }
@@ -84,7 +93,7 @@ blockquote {
   top: 0;
   z-index: 20;
   background: var(--bg-header);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid var(--border);
   backdrop-filter: blur(14px);
 }
 .header-inner,
@@ -135,17 +144,17 @@ blockquote {
 .nav-list a {
   display: block;
   padding: 0.75rem 0.95rem;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid var(--border);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(255, 255, 255, 0.03);
   text-align: center;
 }
 .nav-list a:hover,
 .nav-list a:focus-visible,
 .nav-list a[aria-current="page"] {
   color: var(--text);
-  border-color: rgba(240, 140, 178, 0.42);
-  background: rgba(240, 140, 178, 0.08);
+  border-color: rgba(255, 56, 209, 0.4);
+  background: rgba(224, 0, 168, 0.12);
 }
 .footer-meta a:hover,
 .footer-meta a:focus-visible,
@@ -252,28 +261,28 @@ h3 {
   transform: translateY(-1px);
 }
 .button-primary {
-  background: var(--accent);
+  background: linear-gradient(135deg, var(--accent-purple), var(--accent));
   color: #ffffff;
   box-shadow: 0 14px 30px var(--accent-shadow);
 }
 .button-primary:hover,
 .button-primary:focus-visible {
-  background: var(--accent-strong);
-  box-shadow: 0 18px 36px rgba(240, 140, 178, 0.34);
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  box-shadow: var(--shadow);
 }
 .button-secondary {
   background: transparent;
-  border-color: rgba(255, 255, 255, 0.2);
+  border-color: var(--border);
   color: var(--text);
 }
 .button-secondary:hover,
 .button-secondary:focus-visible {
   background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.34);
+  border-color: rgba(255, 56, 209, 0.36);
 }
 .card {
   padding: 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border);
   border-radius: var(--radius-xl);
   background: linear-gradient(180deg, var(--surface-strong), var(--surface));
   box-shadow: var(--shadow-card);
