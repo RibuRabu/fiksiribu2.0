@@ -22,6 +22,8 @@
     .home-hero .hero-panel {
       min-width: 0;
       width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
     }
     .home-hero .hero-copy > * {
       max-width: 100%;
@@ -31,6 +33,29 @@
     }
     .home-hero .hero-panel {
       overflow: visible;
+    }
+    .home-hero .hero-panel > *,
+    .home-hero .hero-panel li {
+      min-width: 0;
+      max-width: 100%;
+      overflow-wrap: break-word;
+      word-break: normal;
+    }
+    @media (max-width: 47.99rem) {
+      .home-hero .hero-panel {
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+        padding: 1.25rem;
+        overflow: visible;
+      }
+      .home-hero .hero-panel h2 {
+        font-size: clamp(1.7rem, 8vw, 2.2rem);
+      }
+      .home-hero .feature-list {
+        min-width: 0;
+        max-width: 100%;
+      }
     }
     .home-hero .hero-logo {
       display: block;
