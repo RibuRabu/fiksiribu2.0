@@ -25,11 +25,28 @@
       max-width: 100%;
       box-sizing: border-box;
     }
+    .home-hero .hero-copy {
+      overflow: visible;
+    }
     .home-hero .hero-copy > * {
+      min-width: 0;
       max-width: 100%;
+      box-sizing: border-box;
     }
     .home-hero h1 {
       max-width: 12ch;
+      overflow: visible;
+      white-space: normal;
+      overflow-wrap: anywhere;
+      word-break: normal;
+      text-wrap: balance;
+    }
+    .home-hero .hero-text,
+    .home-hero .hero-actions {
+      min-width: 0;
+      width: 100%;
+      max-width: 100%;
+      overflow: visible;
     }
     .home-hero .hero-panel {
       overflow: visible;
@@ -66,7 +83,7 @@
     }
     @media (min-width: 48rem) {
       .home-hero .hero-grid {
-        grid-template-columns: minmax(0, 1.18fr) minmax(17.5rem, 0.82fr);
+        grid-template-columns: minmax(0, 1.24fr) minmax(16.5rem, 0.76fr);
         gap: 1.5rem;
       }
     }
