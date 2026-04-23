@@ -14,6 +14,17 @@
   <meta property="og:url" content="https://fiksiribu.fi/">
   <link rel="stylesheet" href="./assets/css/style.css">
   <style>
+    .site-header .brand {
+      display: inline-flex;
+      align-items: center;
+    }
+    .site-header .brand img {
+      display: block;
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: 44px;
+    }
     .home-hero .hero-grid {
       grid-template-columns: 1fr;
       align-items: start;
@@ -35,11 +46,13 @@
     }
     .home-hero h1 {
       max-width: 12ch;
+      font-size: clamp(2.35rem, 8vw, 4.2rem);
+      line-height: 1.02;
       overflow: visible;
       white-space: normal;
-      overflow-wrap: anywhere;
+      overflow-wrap: normal;
       word-break: normal;
-      text-wrap: balance;
+      hyphens: manual;
     }
     .home-hero .hero-text,
     .home-hero .hero-actions {
@@ -59,6 +72,15 @@
       word-break: normal;
     }
     @media (max-width: 47.99rem) {
+      .home-hero .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      .home-hero h1 {
+        max-width: 100%;
+        font-size: clamp(2.15rem, 9vw, 3rem);
+        line-height: 1.06;
+      }
       .home-hero .hero-panel {
         width: 100%;
         min-width: 0;
@@ -82,9 +104,15 @@
       margin: 0 0 1rem;
     }
     @media (min-width: 48rem) {
+      .site-header .brand img {
+        max-height: 48px;
+      }
       .home-hero .hero-grid {
         grid-template-columns: minmax(0, 1.24fr) minmax(16.5rem, 0.76fr);
         gap: 1.5rem;
+      }
+      .home-hero h1 {
+        max-width: 11ch;
       }
     }
   </style>
@@ -95,7 +123,9 @@
     <header class="site-header">
       <div class="container header-inner">
         <div class="header-top">
-          <a class="brand" href="./index.html" aria-label="Fiksiribu etusivu">FIKSIRIBU</a>
+          <a class="brand" href="./index.html" aria-label="Fiksiribu etusivu">
+            <img src="./assets/img/navbar.logo.png" alt="Fiksiribu" loading="eager" decoding="async">
+          </a>
           <a class="button button-primary header-cta" href="https://ajanvaraus.fiksiribu.fi">Varaa aika</a>
         </div>
         <nav class="site-nav" aria-label="Päänavigaatio">
