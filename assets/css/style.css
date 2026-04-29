@@ -345,9 +345,33 @@ h3 {
   min-width: 0;
   max-width: 100%;
   white-space: normal;
-  overflow-wrap: break-word;
+  overflow-wrap: normal;
   word-break: normal;
-  hyphens: auto;
+  hyphens: manual;
+  line-height: 1.1;
+  text-wrap: balance;
+}
+.card h2,
+.hero-panel h2,
+.pricing-card h2,
+.cta-card h2,
+.profile-card h2,
+.service-list-card h2,
+.value-card h2,
+.quote-card h2,
+.bullet-card h2 {
+  font-size: clamp(1.85rem, 4vw, 2.55rem);
+}
+.card h3,
+.hero-panel h3,
+.pricing-card h3,
+.cta-card h3,
+.profile-card h3,
+.service-list-card h3,
+.value-card h3,
+.quote-card h3,
+.bullet-card h3 {
+  font-size: clamp(1.15rem, 2.1vw, 1.35rem);
 }
 .feature-list,
 .detail-list {
@@ -542,7 +566,18 @@ button:focus-visible {
   .value-card h2,
   .quote-card h2,
   .bullet-card h2 {
-    font-size: clamp(1.7rem, 8vw, 2.2rem);
+    font-size: clamp(1.65rem, 6.4vw, 2.05rem);
+  }
+  .card h3,
+  .hero-panel h3,
+  .pricing-card h3,
+  .cta-card h3,
+  .profile-card h3,
+  .service-list-card h3,
+  .value-card h3,
+  .quote-card h3,
+  .bullet-card h3 {
+    font-size: clamp(1.08rem, 4.2vw, 1.24rem);
   }
 }
 
