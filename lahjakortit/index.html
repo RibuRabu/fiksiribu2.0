@@ -95,6 +95,14 @@
       margin-top: 1rem;
       border-color: rgba(255, 56, 209, 0.24);
     }
+    .notice-grid {
+      display: grid;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .payment-card p:last-child {
+      margin-bottom: 0;
+    }
     .notice-card .section-heading {
       margin-bottom: 1rem;
     }
@@ -120,8 +128,9 @@
       .gift-card-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
-      .notice-card {
-        margin-top: 1.25rem;
+      .notice-grid {
+        grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+        align-items: start;
       }
     }
     @media (min-width: 64rem) {
@@ -174,7 +183,7 @@
             </ul>
           </aside>
         </div>
-        <div class="container">
+        <div class="container notice-grid">
           <article class="card notice-card">
             <div class="section-heading narrow">
               <p class="eyebrow">Tärkeää</p>
@@ -183,6 +192,13 @@
             <p>Tärkeää: kirjoita sähköpostiosoitteesi maksun viestikenttään.</p>
             <p>Lahjakortti toimitetaan siihen osoitteeseen maksun jälkeen.</p>
             <p>Ilman sähköpostiosoitetta toimitus voi viivästyä.</p>
+          </article>
+          <article class="card payment-card">
+            <div class="section-heading narrow">
+              <p class="eyebrow">Maksutavat</p>
+            </div>
+            <p>Korttimaksu, Apple Pay ja Google Pay.</p>
+            <p>Jos haluat maksaa laskulla, ota ensin yhteyttä.</p>
           </article>
         </div>
       </section>
