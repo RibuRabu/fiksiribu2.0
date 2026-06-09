@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Opi lukemaan hermostoa | Täydennyskoulutus | Fiksiribu</title>
+  <meta name="description" content="Opi lukemaan hermostoa -täydennyskoulutus manuaalisen työn ammattilaisille. Interaktiivinen verkko-oppiminen hermoston toiminnasta ja kosketuksen laadusta.">
+  <link rel="canonical" href="https://fiksiribu.fi/koulutus/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fi_FI">
+  <meta property="og:site_name" content="Fiksiribu">
+  <meta property="og:title" content="Opi lukemaan hermostoa | Fiksiribu">
+  <meta property="og:url" content="https://fiksiribu.fi/koulutus/">
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0a;--bg2:#111;--card:#181818;--card2:#1e1e1e;
+  --border:#252525;--border2:#333;
+  --text:#fff;--muted:rgba(255,255,255,.58);--dim:rgba(255,255,255,.32);
+  --pink:#d400d4;--pink2:#e040e0;--psoft:rgba(212,0,212,.14);--pborder:rgba(212,0,212,.38);
+  --green:#00c896;--gsoft:rgba(0,200,150,.12);--gborder:rgba(0,200,150,.35);
+  --red:#ff4444;--rsoft:rgba(255,68,68,.12);--rborder:rgba(255,68,68,.35);
+  --sans:'Inter',system-ui,sans-serif;--mono:'IBM Plex Mono','Courier New',monospace;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased}
+.pb{position:fixed;top:0;left:0;height:2px;background:var(--pink);transition:width .4s;z-index:200}
+
+
+.nlogo span{color:var(--pink)}
+
+
+.dot{width:6px;height:6px;border-radius:50%;background:var(--border2);cursor:pointer;transition:all .2s;border:none;padding:0}
+.dot.active{background:var(--pink);transform:scale(1.5)}
+.dot.done{background:rgba(212,0,212,.45)}
+
+.screen{display:none;min-height:100vh;padding:74px 0 80px}
+.screen.active{display:block}
+#si.active,#sf.active{display:flex}
+.w{max-width:700px;margin:0 auto;padding:0 28px}
+.lbl{font-family:var(--mono);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--pink);display:block;margin-bottom:14px}
+h1{font-size:clamp(28px,5vw,50px);font-weight:800;line-height:1.1;margin-bottom:22px;letter-spacing:-.5px}
+h2{font-size:clamp(18px,3vw,26px);font-weight:700;margin-bottom:16px;letter-spacing:-.3px}
+h3{font-size:16px;font-weight:600;margin-bottom:10px}
+p{font-size:15px;line-height:1.82;color:var(--muted);margin-bottom:15px}
+strong{color:var(--text);font-weight:600}
+.quote{font-size:clamp(16px,2.2vw,19px);font-style:italic;color:var(--text);border-left:2px solid var(--pink);padding:6px 0 6px 20px;margin:32px 0;line-height:1.65}
+.btn{display:inline-block;font-family:var(--sans);font-size:13px;font-weight:600;padding:12px 26px;border:none;cursor:pointer;transition:all .2s;border-radius:7px;text-decoration:none;letter-spacing:.1px}
+.btn-pink{background:var(--pink);color:#fff}.btn-pink:hover{background:#b800b8}
+.btn-ghost{background:transparent;color:var(--text);border:1px solid var(--border2);margin-right:10px}.btn-ghost:hover{border-color:rgba(255,255,255,.35);background:var(--card)}
+.nb{margin-top:44px;display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px 22px;margin-bottom:10px}
+.clbl{font-family:var(--mono);font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--pink);margin-bottom:6px;display:block}
+.card p{margin:0;font-size:14px;color:var(--muted);line-height:1.7}
+.divider{height:1px;background:var(--border);margin:38px 0}
+.sci{background:var(--card2);border:1px solid var(--pborder);border-radius:8px;padding:14px 18px;margin:16px 0;display:flex;gap:12px;align-items:flex-start}
+.sci-icon{font-size:16px;flex-shrink:0;margin-top:2px}
+.sci-text{font-size:13px;color:var(--muted);line-height:1.7}
+.sci-text strong{color:var(--pink);font-weight:600}
+#si{background:var(--bg);align-items:center;padding:0}
+#si .w{padding:80px 28px}
+#sf{background:var(--bg);align-items:center;justify-content:center;text-align:center;padding:0}
+#sf .w{padding:80px 28px}
+#sf .principle{font-size:clamp(18px,3vw,24px);font-style:italic;color:var(--pink);margin:32px 0;line-height:1.5}
+#sf .footer{font-family:var(--mono);font-size:10px;color:var(--dim);letter-spacing:3px;margin-top:16px}
+.anim{background:var(--bg2);border:1px solid var(--border);border-radius:10px;margin:26px 0;position:relative;overflow:hidden}
+canvas{display:block;width:100%}
+.albl{position:absolute;bottom:10px;right:14px;font-family:var(--mono);font-size:9px;color:var(--dim);letter-spacing:2px}
+
+/* RESPONSE */
+.rg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:22px 0}
+@media(max-width:500px){.rg{grid-template-columns:1fr}}
+.rc{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;cursor:pointer;transition:all .2s}
+.rc:hover{transform:translateY(-2px);border-color:var(--border2)}
+.rc .icon{font-size:20px;margin-bottom:8px;display:block}
+.rc h4{font-size:14px;font-weight:600;margin-bottom:4px}
+.rc p{font-size:12px;color:var(--dim);margin:0;line-height:1.6}
+.rc.safe{border-color:var(--pborder)}
+.rc.threat{border-color:var(--rborder)}
+.rbox{display:none;padding:15px 18px;margin-bottom:6px;border-left:2px solid var(--pink);background:var(--card);border-radius:0 8px 8px 0;font-size:14px;line-height:1.75;color:var(--muted)}
+
+/* SIGNAL BARS */
+.sigs{margin:22px 0}
+.srow{display:flex;align-items:center;gap:14px;margin-bottom:13px}
+.sname{font-family:var(--mono);font-size:10px;letter-spacing:1px;width:155px;flex-shrink:0;color:var(--dim);text-transform:uppercase}
+.sbg{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden}
+.sbar{height:100%;width:0;transition:width 1.1s ease;border-radius:2px}
+.sval{font-family:var(--mono);font-size:10px;width:52px;text-align:right;letter-spacing:1px}
+.simbtns{display:flex;gap:8px;flex-wrap:wrap}
+.sbtn{font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;padding:9px 16px;border:1px solid var(--border);background:var(--card);cursor:pointer;transition:all .2s;color:var(--muted);border-radius:6px}
+.sbtn:hover{border-color:var(--border2);color:var(--text)}
+.sbtn.os{background:var(--psoft);border-color:var(--pborder);color:var(--pink)}
+.sbtn.ot{background:var(--rsoft);border-color:var(--rborder);color:var(--red)}
+
+/* KUDOSVASTEET */
+.vtabs{display:flex;flex-wrap:wrap;gap:5px;margin:20px 0 0}
+.vtab{font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;padding:7px 13px;border:1px solid var(--border);background:var(--card);cursor:pointer;transition:all .2s;color:var(--dim);border-radius:6px}
+.vtab:hover{border-color:var(--border2);color:var(--text)}
+.vtab.on{background:var(--pink);color:#fff;border-color:var(--pink)}
+.vbox{background:var(--card);border:1px solid var(--border);border-radius:0 10px 10px 10px;padding:24px;min-height:190px;animation:fi .25s ease;margin-top:-1px}
+@keyframes fi{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.vstate{font-family:var(--mono);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--pink);margin-bottom:5px}
+.vtitle{font-size:21px;font-weight:700;margin-bottom:11px;letter-spacing:-.3px}
+.vfeel{font-size:14px;font-style:italic;color:var(--muted);margin-bottom:12px;line-height:1.65}
+.vdesc{font-size:13px;line-height:1.75;color:var(--muted);margin-bottom:12px}
+.vact{border-left:2px solid var(--pink);padding:11px 15px;background:var(--bg2);border-radius:0 6px 6px 0;font-size:13px;line-height:1.7;color:var(--muted)}
+.vact strong{font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--pink);display:block;margin-bottom:4px}
+
+/* STEPS */
+.step{display:flex;gap:16px;align-items:flex-start;background:var(--card);border:1px solid var(--border);border-radius:10px;border-left:2px solid var(--pink);padding:16px 18px;margin-bottom:9px}
+.snum{font-family:var(--mono);font-size:19px;font-weight:500;color:var(--pink);flex-shrink:0;line-height:1.2}
+.stxt{font-size:14px;line-height:1.75;color:var(--muted)}
+.stxt strong{color:var(--text);font-weight:600}
+
+/* INTERACTIVE EXERCISES */
+.ex-wrap{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:22px;margin:16px 0}
+.ex-title{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--pink);margin-bottom:10px}
+.ex-desc{font-size:14px;color:var(--muted);line-height:1.75;margin-bottom:16px}
+.ex-btn{font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;padding:9px 18px;border:1px solid var(--pborder);background:var(--psoft);cursor:pointer;transition:all .2s;color:var(--pink);border-radius:6px;margin-right:8px;margin-bottom:8px}
+.ex-btn:hover{background:var(--pink);color:#fff;border-color:var(--pink)}
+.ex-result{margin-top:14px;padding:14px 16px;border-radius:8px;font-size:14px;line-height:1.75;display:none}
+.ex-result.show{display:block}
+.ex-result.good{background:var(--gsoft);border:1px solid var(--gborder);color:rgba(255,255,255,.8)}
+.ex-result.neutral{background:var(--psoft);border:1px solid var(--pborder);color:rgba(255,255,255,.8)}
+
+/* TIMER */
+.timer-wrap{text-align:center;padding:24px 0}
+.timer-ring{width:100px;height:100px;margin:0 auto 16px;position:relative}
+.timer-ring svg{transform:rotate(-90deg)}
+.timer-num{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--mono);font-size:22px;font-weight:500;color:var(--text)}
+.timer-label{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--dim);text-transform:uppercase;margin-bottom:14px}
+.timer-inst{font-size:14px;color:var(--muted);line-height:1.7;max-width:420px;margin:0 auto 16px}
+
+/* VELOCITY SLIDER */
+.vel-wrap{margin:20px 0}
+.vel-label{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--dim);letter-spacing:1px;margin-bottom:8px}
+input[type=range]{width:100%;-webkit-appearance:none;appearance:none;height:4px;background:var(--border2);border-radius:2px;outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;background:var(--pink);border-radius:50%;cursor:pointer;transition:transform .1s}
+input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.2)}
+.vel-feedback{margin-top:14px;padding:12px 16px;border-radius:8px;font-family:var(--mono);font-size:11px;letter-spacing:1px;text-align:center;transition:all .3s}
+
+/* QUIZ */
+.quiz-q{font-size:15px;font-weight:600;color:var(--text);margin-bottom:14px;line-height:1.5}
+.quiz-opts{display:flex;flex-direction:column;gap:8px}
+.qopt{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px 16px;cursor:pointer;font-size:14px;color:var(--muted);transition:all .2s;text-align:left}
+.qopt:hover{border-color:var(--border2);color:var(--text)}
+.qopt.correct{background:var(--gsoft);border-color:var(--gborder);color:#fff}
+.qopt.wrong{background:var(--rsoft);border-color:var(--rborder);color:#fff}
+.quiz-exp{margin-top:12px;padding:12px 16px;background:var(--card2);border-radius:8px;font-size:13px;color:var(--muted);line-height:1.7;display:none}
+.quiz-exp.show{display:block}
+
+/* PRESS DEMO */
+.pdemo{position:relative;cursor:pointer}
+.phint{position:absolute;top:12px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--dim);background:rgba(0,0,0,.6);padding:4px 12px;border-radius:20px;white-space:nowrap;pointer-events:none}
+
+/* OBSERVATION CHECKLIST */
+.checklist{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:16px 0}
+@media(max-width:480px){.checklist{grid-template-columns:1fr}}
+.citem{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 14px;cursor:pointer;transition:all .2s;user-select:none}
+.citem:hover{border-color:var(--border2)}
+.citem.checked{background:var(--psoft);border-color:var(--pborder)}
+.cbox{width:16px;height:16px;border:1px solid var(--border2);border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;font-size:11px}
+.citem.checked .cbox{background:var(--pink);border-color:var(--pink);color:#fff}
+.ctext{font-size:12px;color:var(--muted);line-height:1.4}
+.citem.checked .ctext{color:var(--text)}
+.c-score{font-family:var(--mono);font-size:11px;color:var(--dim);letter-spacing:1px;margin-top:10px}
+
+/* BREATH EXERCISE */
+.breath-ring{width:120px;height:120px;margin:0 auto;border-radius:50%;border:2px solid var(--pborder);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;letter-spacing:1px;color:var(--pink);transition:all .4s ease;position:relative}
+.breath-phase{font-size:11px;letter-spacing:2px;text-transform:uppercase}
+
+/* TABS for sections */
+.stabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:20px;gap:0}
+.stab{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:10px 16px;cursor:pointer;color:var(--dim);border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .2s}
+.stab:hover{color:var(--text)}
+.stab.on{color:var(--pink);border-bottom-color:var(--pink)}
+.spanel{display:none}.spanel.on{display:block}
+
+  /* Kurssi-spesifinen: piilota site-header padding-kompensaatio */
+  .koulutus-wrap { padding-top: 0; }
+  .screen { padding-top: 0; }
+  #si { min-height: calc(100vh - 54px); }
+  #sf { min-height: calc(100vh - 54px); }
+  </style>
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "wnuwogjlbn");
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Siirry sisältöön</a>
+  <div class="site-shell">
+    <header class="site-header">
+      <div class="container header-inner">
+        <div class="header-top">
+          <a class="brand" href="../../index.html" aria-label="Fiksiribu etusivu">FIKSIRIBU</a>
+          <a class="button button-primary header-cta" href="https://ajanvaraus.fiksiribu.fi">Varaa aika</a>
+        </div>
+        <nav class="site-nav" aria-label="Päänavigaatio">
+          <ul class="nav-list">
+            <li><a href="../../kotikaynti.html">Kotikäynti</a></li>
+            <li><a href="../../hinnasto.html">Hinnasto</a></li>
+            <li><a href="../../riikka-kallio.html">Riikka</a></li>
+            <li><a href="../../palaute.html">Palaute</a></li>
+            <li><a href="../../yhteys.html">Yhteys</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <div class="koulutus-wrap">
+        <!-- Progress bar -->
+        <div class="pb" id="pb"></div>
+        <!-- Module dots nav -->
+        <div style="position:fixed;top:56px;right:16px;z-index:90;display:flex;align-items:center;gap:10px;background:rgba(10,10,10,0.85);backdrop-filter:blur(10px);padding:6px 14px;border-radius:20px;border:1px solid #252525">
+          <div class="ndots" id="dots"></div>
+          <div class="nctr" id="ctr"></div>
+        </div>
+
+<div class="pb" id="pb"></div>
+
+<!-- INTRO -->
+<div class="screen active" id="si">
+  <div class="w">
+    <span class="lbl">Täydennyskoulutus · Manuaalisen työn ammattilaisille</span>
+    <h1>Opi lukemaan<br>hermostoa</h1>
+    <p style="font-size:17px;color:var(--muted)">Kosketus ei ole tekniikka. Se on kieli.<br>Tässä oppimispolulla opit lukemaan sen.</p>
+    <div class="sci" style="margin:24px 0">
+      <div class="sci-icon">🔬</div>
+      <div class="sci-text">Kurssi pohjautuu uusimpaan tutkimukseen: C-tactile -afferentit (Birznieks 2025), polyvagaaliteoria (Porges 2023–2024), hieronnan EEG-tutkimus (2025) sekä Packheiser ym. meta-analyysi 2023.</div>
+    </div>
+    <p style="font-family:var(--mono);font-size:11px;color:var(--dim);letter-spacing:1px">6 moduulia · teoria + harjoitukset + interaktiivinen osuus</p>
+    <button class="btn btn-pink" style="margin-top:28px" onclick="go(1)">Aloita →</button>
+  </div>
+</div>
+
+<!-- M1: IHO ON HERMOSTO -->
+<div class="screen" id="s1">
+  <div class="w">
+    <span class="lbl">Moduuli 1 / 6 — Perusta</span>
+    <h1>Iho on hermosto</h1>
+    <p>Kosketus ei jää iholle. Se kulkee hermostoa pitkin aivoihin alle sekunnissa — ennen kuin asiakas tietoisesti rekisteröi mitään.</p>
+
+    <div class="anim" style="height:170px">
+      <canvas id="c1" height="170"></canvas>
+      <div class="albl">IHON RESEPTORIT · JATKUVA SIGNAALI</div>
+    </div>
+
+    <div class="sci"><div class="sci-icon">🔬</div><div class="sci-text"><strong>Birznieks 2025 (Journal of Physiology):</strong> C-tactile -afferentit toimivat "stealth-järjestelmänä" — ne eivät tuota tietoista tunnetta vaan ohjaavat emotionaalista prosessointia taustalla. Karvainen iho on niiden pääalue.</div></div>
+
+    <div class="stabs">
+      <div class="stab on" onclick="stab(this,'rt1')">Reseptorit</div>
+      <div class="stab" onclick="stab(this,'rt2')">Kulkureitti</div>
+      <div class="stab" onclick="stab(this,'rt3')">Optimaalinen stimulaatio</div>
+    </div>
+
+    <div class="spanel on" id="rt1">
+      <div class="card"><span class="clbl">Meissner</span><p>Nopea liike, rytmi, 3–40 Hz. Herättää tarkkaavaisuuden. Ensimmäinen reagoija.</p></div>
+      <div class="card"><span class="clbl">Merkel</span><p>Vakaa paine, jatkuvuus. Luo turvallisuuden tunteen. Antaa luvan avata kudosta.</p></div>
+      <div class="card"><span class="clbl">Ruffini</span><p>Venytys ja suunta. Rauhoittaa. Aktivoi parasympaattisen. Syvässä työskentelyssä keskeinen.</p></div>
+      <div class="card"><span class="clbl">Pacini</span><p>Värähtely, 40–500 Hz. Nopea varoitusjärjestelmä. Liikaa käytettynä tekee kudoksesta levottoman.</p></div>
+      <div class="card"><span class="clbl">C-tactile</span><p>Hidas, lämmin kosketus ~3 cm/s. Vapauttaa oksitosiinia. Aktivoi ventraalivagaalisen järjestelmän.</p></div>
+    </div>
+    <div class="spanel" id="rt2">
+      <div class="card"><span class="clbl">Kulkureitti</span><p>Iho → afferentit sensoriset radat → selkäytimen dorsaalisarvi → talamus → somatosensorinen aivokuori + insula → limbinen järjestelmä arvioi turvallisuuden → vagus → parasympaattinen aktivaatio → gamma-motoneuronien inhiboituminen → lihastonuksen lasku.</p></div>
+      <div class="sci"><div class="sci-icon">🔬</div><div class="sci-text"><strong>EEG-tutkimus 2025:</strong> Kohtalainen paine hieronnassa lisäsi alfaaktiviteettia (rentoutuminen) ja vähensi betaa/gammaa. Frontaalinen alfaepäsymmetria siirtyi vasemmalle — positiivinen affektiivinen tila.</div></div>
+    </div>
+    <div class="spanel" id="rt3">
+      <div class="card"><span class="clbl">C-tactile optimum</span><p>~3 cm/s nopeus · 1–2 mN paine · ihonlämpö ~32°C · karvainen iho (ei kämmenselkä). Tämä on parasympaattisen rauhoittumisen ikkuna.</p></div>
+      <div class="card"><span class="clbl">Ruffini optimum</span><p>Pitkät, hitaat vedot 10–30 sekuntia. Ei nykäistä. Suunta pysyvä. Faskiaalinen jännitys laskee.</p></div>
+      <div class="card"><span class="clbl">Merkel optimum</span><p>Hidas, vakaa paine ~0.3–0.5 N. Ei liikettä. Luo ennakoitavuuden ja vakauden tunteen hermostolle.</p></div>
+    </div>
+
+    <div class="nb">
+      <button class="btn btn-ghost" onclick="go(0)">← Takaisin</button>
+      <button class="btn btn-pink" onclick="go(2)">Seuraava →</button>
+    </div>
+  </div>
+</div>
+
+<!-- M2: HERMOSTON LOGIIKKA -->
+<div class="screen" id="s2">
+  <div class="w">
+    <span class="lbl">Moduuli 2 / 6 — Hermoston logiikka</span>
+    <h1>Hermosto kysyy aina<br>yhden kysymyksen</h1>
+    <div class="quote">"Olenko turvassa?"</div>
+    <p>Jokainen kosketus arvioidaan ennen tietoista ajattelua. Porges (2023) kutsuu tätä <strong>neuroseptioksi</strong> — kehon automaattinen turvallisuusskanneri, joka toimii ilman tietoisuutta.</p>
+
+    <div class="sci"><div class="sci-icon">🔬</div><div class="sci-text"><strong>Porges 2023–2024 (The Vagal Paradox):</strong> Ventraalivagaalinen järjestelmä — sosiaalinen sitoutuminen, turvallisuus, yhteys — on hierarkkisesti ensimmäinen. Sympaattinen mobilisaatio ja dorsaalivagaalinen jähmettyminen aktivoituvat vasta kun turvallisuus puuttuu.</div></div>
+
+    <p style="margin-top:8px">Kumman viestin kosketus lähettää?</p>
+    <div class="rg">
+      <div class="rc safe" onclick="pickR('safe')"><span class="icon">🤲</span><h4>Hidas, tasainen kosketus</h4><p>Ennakoitava. Sama rytmi. Pysyvä paino.</p></div>
+      <div class="rc threat" onclick="pickR('threat')"><span class="icon">👊</span><h4>Nopea, voimakas kosketus</h4><p>Yllättävä. Muuttuva. Pakottava.</p></div>
+    </div>
+    <div class="rbox" id="rbox"></div>
+
+    <div class="divider"></div>
+    <h2>Simuloi hermoston vaste</h2>
+    <div class="sigs">
+      <div class="srow"><div class="sname">Lihastonus</div><div class="sbg"><div class="sbar" id="b1"></div></div><div class="sval" id="v1">—</div></div>
+      <div class="srow"><div class="sname">Hengitys</div><div class="sbg"><div class="sbar" id="b2"></div></div><div class="sval" id="v2">—</div></div>
+      <div class="srow"><div class="sname">Parasympaattinen</div><div class="sbg"><div class="sbar" id="b3"></div></div><div class="sval" id="v3">—</div></div>
+      <div class="srow"><div class="sname">Syke</div><div class="sbg"><div class="sbar" id="b4"></div></div><div class="sval" id="v4">—</div></div>
+    </div>
+    <div class="simbtns">
+      <button class="sbtn" id="sb1" onclick="runSig('safe')">▶ Turvallinen kosketus</button>
+      <button class="sbtn" id="sb2" onclick="runSig('threat')">▶ Uhkaava kosketus</button>
+    </div>
+
+    <div class="divider"></div>
+    <h2>Harjoitus: Nopeuden vaikutus</h2>
+    <p>Säädä kosketuksen nopeutta. Mitä hermosto tekee?</p>
+    <div class="vel-wrap">
+      <div class="vel-label"><span>HIDAS (1 cm/s)</span><span>NOPEA (20 cm/s)</span></div>
+      <input type="range" min="1" max="20" value="3" id="velSlider" oninput="updateVel(this.value)">
+      <div class="vel-feedback" id="velFb"></div>
+    </div>
+
+    <div class="nb">
+      <button class="btn btn-ghost" onclick="go(1)">← Takaisin</button>
+      <button class="btn btn-pink" onclick="go(3)">Seuraava →</button>
+    </div>
+  </div>
+</div>
+
+<!-- M3: KUDOSVASTEET -->
+<div class="screen" id="s3">
+  <div class="w">
+    <span class="lbl">Moduuli 3 / 6 — Kudosvasteet</span>
+    <h1>Viisi kudosvastetta</h1>
+    <p>Hermosto puhuu käsiesi kautta. Nämä ovat sen viisi tapaa vastata kosketukseen.</p>
+    <div class="vtabs" id="vtabs"></div>
+    <div class="vbox" id="vbox"></div>
+
+    <div class="divider"></div>
+    <h2>Tunnista vaste — harjoitus</h2>
+    <p>Lue kuvaus. Mikä kudosvaste on kyseessä?</p>
+    <div id="quizWrap"></div>
+
+    <div class="divider"></div>
+    <div class="quote">"Sinä et avaa kudosta. Sinä annat keholle mahdollisuuden avautua."</div>
+
+    <div class="nb">
+      <button class="btn btn-ghost" onclick="go(2)">← Takaisin</button>
+      <button class="btn btn-pink" onclick="go(4)">Seuraava →</button>
+    </div>
+  </div>
+</div>
+
+<!-- M4: HAVAINNOINTI -->
+<div class="screen" id="s4">
+  <div class="w">
+    <span class="lbl">Moduuli 4 / 6 — Havainnointi</span>
+    <h1>Ensin katsot,<br>sitten kosketat</h1>
+    <p>Hermostoa luetaan näkemällä ennen tekemistä. Harjoittele ensin yhtä signaalia kerrallaan — liian moni havaintopiste tekee kehosta kohinaa.</p>
+
+    <div class="sci"><div class="sci-icon">🔬</div><div class="sci-text"><strong>Packheiser ym. 2023 (meta-analyysi):</strong> Kosketuksen <em>tiheys</em> korreloi positiivisten terveysvaikutusten kanssa enemmän kuin kesto. Ammattilaisen ja tutun henkilön kosketuksella ei ollut eroa vaikuttavuudessa.</div></div>
+
+    <div class="divider"></div>
+    <h2>Hermoston havainnoitavat signaalit</h2>
+    <p>Merkitse ne signaalit joita tunnistat jo nyt omassa työssäsi:</p>
+    <div class="checklist" id="checklist"></div>
+    <div class="c-score" id="cscore"></div>
+
+    <div class="divider"></div>
+    <h2>Havainnoinnin järjestys</h2>
+    <div class="step"><div class="snum">1</div><div class="stxt"><strong>Hengitys</strong> — kertoo vireystilan ennen kosketusta. Katkonainen = sympaattinen. Syvä ja laskeva = parasympaattinen. Pysähtynyt = puolustus.</div></div>
+    <div class="step"><div class="snum">2</div><div class="stxt"><strong>Kasvot</strong> — "tonusmaski". Sympatikus kiristää kasvojen faskian. Pehmeät kasvot = turva. Kalvomainen, kireä iho = puolustus.</div></div>
+    <div class="step"><div class="snum">3</div><div class="stxt"><strong>Paino ja asento</strong> — epätasainen paino = valmius. Tasainen = luottamus. Hartiat ylhäällä = sympaattinen. Pudonneet = parasympaattinen.</div></div>
+    <div class="step"><div class="snum">4</div><div class="stxt"><strong>Kosketus</strong> — uppoaa = kyllä. Vetäytyy = ei. Odota ennen kuin teet lisää. Älä johda — seuraa.</div></div>
+
+    <div class="nb">
+      <button class="btn btn-ghost" onclick="go(3)">← Takaisin</button>
+      <button class="btn btn-pink" onclick="go(5)">Seuraava →</button>
+    </div>
+  </div>
+</div>
+
+<!-- M5: KÄYTÄNTÖ & LAATU -->
+<div class="screen" id="s5">
+  <div class="w">
+    <span class="lbl">Moduuli 5 / 6 — Käytäntö</span>
+    <h1>Laatu ratkaisee,<br>ei voima</h1>
+    <p>Sama voima — täysin eri viesti. Ero ei ole kädessä. Ero on hermoston tulkinnassa.</p>
+
+    <div class="anim pdemo" style="height:165px" id="pdemo" onclick="togglePress()">
+      <canvas id="c4" height="165"></canvas>
+      <div class="phint" id="phint">Klikkaa vaihtaaksesi tilaa</div>
+    </div>
+
+    <div class="sci"><div class="sci-icon">🔬</div><div class="sci-text"><strong>EEG-tutkimus 2025:</strong> Kohtalainen paine → parasympaattinen/rentoutumisprofiili. Voimakas, nopea paine → sympaattinen aktivaatio, neuromotorin herkistyminen. Sama käsi, täysin eri hermoston vasteet.</div></div>
+
+    <div class="divider"></div>
+    <h2>Harjoitus: Kosketuksen laadun kalibrointi</h2>
+
+    <div class="ex-wrap">
+      <div class="ex-title">⏱ Hitausharjoitus — tee itse</div>
+      <div class="ex-desc">Laske kätesi omalle ranteellesi. Liiku siitä kyynärpäähäsi. Tavoite: niin hitaasti että matka kestää yli 30 sekuntia. C-tactile -optimaali on ~3 cm/s.</div>
+      <button class="ex-btn" onclick="startTimer(30,'t1','Hyvä. Tässä nopeudessa C-tactile -järjestelmä aktivoituu ja oksitosiini vapautuu. Hermosto tunnistaa tämän turvalliseksi.')">▶ Käynnistä 30s ajastin</button>
+      <div id="t1" class="timer-wrap" style="display:none">
+        <div class="timer-ring">
+          <svg width="100" height="100" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="44" fill="none" stroke="var(--border2)" stroke-width="4"/>
+            <circle cx="50" cy="50" r="44" fill="none" stroke="var(--pink)" stroke-width="4" stroke-dasharray="276.5" id="tring1" stroke-dashoffset="0"/>
+          </svg>
+          <div class="timer-num" id="tnum1">30</div>
+        </div>
+        <div class="timer-label" id="tinst1">Liiku hitaasti ranteesta kyynärpäähän</div>
+      </div>
+      <div class="ex-result" id="tres1"></div>
+    </div>
+
+    <div class="ex-wrap">
+      <div class="ex-title">🫁 Hengityssynkronia — parin kanssa</div>
+      <div class="ex-desc">Laske kätesi asiakkaan selkään. Älä liiku. Odota kolme hengitystä. Neljännellä: anna oman hengityksesi rytmittyä asiakkaan hengitykseen. Tämä on neurofoninen synkronia — hermostot alkavat resonoida.</div>
+      <button class="ex-btn" onclick="startBreath()">▶ Hengitysohjaaja</button>
+      <div id="breathWrap" style="display:none;margin-top:16px">
+        <div class="breath-ring" id="breathRing">
+          <span class="breath-phase" id="bphase">SISÄÄN</span>
+        </div>
+        <div style="text-align:center;margin-top:10px;font-family:var(--mono);font-size:10px;color:var(--dim);letter-spacing:2px" id="bctr">kierros 1 / 6</div>
+        <div style="text-align:center;margin-top:8px;font-size:13px;color:var(--muted)" id="binst">Hengitä rauhallisesti. Anna myös oma kehosi laskeutua.</div>
+      </div>
+    </div>
+
+    <div class="ex-wrap">
+      <div class="ex-title">👁 Havaintopäiväkirja — seuraavat 3 hoitoa</div>
+      <div class="ex-desc">Valitse yksi signaali jonka harjoittelet seuraavassa kolmessa hoidossa. Vain yksi. Kun yksi tulee näkyviin, muut alkavat kertoa samaa tarinaa.</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px">
+        <button class="ex-btn" onclick="selectSignal(this,'Hengitys')">Hengitys</button>
+        <button class="ex-btn" onclick="selectSignal(this,'Kasvojen pehmeys')">Kasvojen pehmeys</button>
+        <button class="ex-btn" onclick="selectSignal(this,'Painon uppoaminen')">Painon uppoaminen</button>
+        <button class="ex-btn" onclick="selectSignal(this,'Kudoksen mikroliike')">Kudoksen mikroliike</button>
+      </div>
+      <div class="ex-result" id="sigResult"></div>
+    </div>
+
+    <div class="nb">
+      <button class="btn btn-ghost" onclick="go(4)">← Takaisin</button>
+      <button class="btn btn-pink" onclick="go(6)">Seuraava →</button>
+    </div>
+  </div>
+</div>
+
+<!-- M6: KOMMUNIKOINTI -->
+<div class="screen" id="s6">
+  <div class="w">
+    <span class="lbl">Moduuli 6 / 6 — Kommunikointi</span>
+    <h1>Havainnoi — älä<br>diagnosoi</h1>
+    <p>Ammattimainen hermostoviestintä tarkoittaa: kuvaat havaittuja ilmiöitä ilman tulkintaa, ilman diagnoosia, ilman ongelmatarinoita.</p>
+
+    <div class="divider"></div>
+    <h2>Kolmen lauseen protokolla</h2>
+    <div class="step"><div class="snum">1</div><div class="stxt"><strong>Havainto</strong> — "Kun kosketan tähän, keho reagoi pienenä jännitteenä."</div></div>
+    <div class="step"><div class="snum">2</div><div class="stxt"><strong>Kokemus</strong> — "Tuntuuko tämä sinusta painemaiselta, terävältä vai jotain muuta?"</div></div>
+    <div class="step"><div class="snum">3</div><div class="stxt"><strong>Toiminta</strong> — "Hidastan hieman, jotta keho ehtii mukaan."</div></div>
+
+    <div class="divider"></div>
+    <h2>Harjoitus: Oikea vai väärä lausumistapa?</h2>
+    <div id="langQuiz"></div>
+
+    <div class="divider"></div>
+    <div class="quote">"Odota kunnes keho sanoo kyllä."</div>
+
+    <div class="nb">
+      <button class="btn btn-ghost" onclick="go(5)">← Takaisin</button>
+      <button class="btn btn-pink" onclick="go(7)">Yhteenveto →</button>
+    </div>
+  </div>
+</div>
+
+<!-- FINAL -->
+<div class="screen" id="sf">
+  <div class="w">
+    <span class="lbl" style="display:block;text-align:center">Kurssi suoritettu</span>
+    <h1 style="text-align:center">Hermosto on<br>luettavissa</h1>
+    <div class="principle">"Odota kunnes keho sanoo kyllä."</div>
+    <p>Harjoittele ensin yhtä signaalia kerrallaan.<br>Kun yksi tulee näkyviin, muut alkavat kertoa samaa tarinaa.</p>
+    <div class="sci" style="text-align:left;margin:24px 0"><div class="sci-icon">📚</div><div class="sci-text">Lähdeaineisto: Birznieks 2025 · Porges 2023–2024 · Packheiser ym. 2023 · EEG-hierontatutkimus 2025 · McGlone ym. 2014 · Löken ym. 2009</div></div>
+    <button class="btn btn-pink" onclick="go(0)">Aloita alusta</button>
+    <p class="footer">FIKSIRIBU · RIIKKA KALLIO · FIKSIRIBU.FI/KOULUTUS</p>
+  </div>
+</div>
+
+<script>
+// --- NAV ---
+const IDS=['si','s1','s2','s3','s4','s5','s6','sf'];
+let cur=0;
+function go(n){
+  IDS.forEach(id=>document.getElementById(id).classList.remove('active'));
+  document.getElementById(IDS[n]).classList.add('active');
+  cur=n;ui();window.scrollTo(0,0);
+  if(n===1)c1Start();
+  if(n===3){buildVtabs();showV(0);buildQuiz();}
+  if(n===4)buildChecklist();
+  if(n===5)c4Start();
+  if(n===6)buildLangQuiz();
+}
+function ui(){
+  document.getElementById('pb').style.width=(cur/(IDS.length-1)*100)+'%';
+  document.getElementById('ctr').textContent=(cur+1)+' / '+IDS.length;
+  document.getElementById('dots').innerHTML=IDS.map((_,i)=>{
+    const c='dot'+(i===cur?' active':i<cur?' done':'');
+    return`<button class="${c}" onclick="go(${i})"></button>`;
+  }).join('');
+}
+ui();
+
+// --- SECTION TABS ---
+function stab(el,panelId){
+  el.closest('.w').querySelectorAll('.stab').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+  el.closest('.w').querySelectorAll('.spanel').forEach(p=>p.classList.remove('on'));
+  document.getElementById(panelId).classList.add('on');
+}
+
+// --- C1 CANVAS ---
+let r1;
+function c1Start(){
+  cancelAnimationFrame(r1);
+  const cv=document.getElementById('c1');
+  const ctx=cv.getContext('2d');
+  cv.width=cv.parentElement.offsetWidth;
+  const W=cv.width,H=170;let t=0;
+  const recs=[
+    {x:W*.08,y:H*.52,col:'#d400d4',lbl:'Merkel',ph:0},
+    {x:W*.26,y:H*.44,col:'#ff66ff',lbl:'Meissner',ph:.7},
+    {x:W*.47,y:H*.54,col:'#7c88ff',lbl:'Ruffini',ph:1.4},
+    {x:W*.67,y:H*.44,col:'#55aaff',lbl:'Pacini',ph:2.1},
+    {x:W*.86,y:H*.52,col:'#ff88cc',lbl:'C-tactile',ph:2.8},
+  ];
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    ctx.beginPath();
+    for(let x=0;x<=W;x+=3){const y=H*.27+Math.sin(x*.02+t*.35)*3;x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+    ctx.strokeStyle='rgba(224,0,168,.18)';ctx.lineWidth=1;ctx.stroke();
+    ctx.beginPath();
+    for(let x=0;x<=W;x+=3){const y=H*.79+Math.sin(x*.015+t*.28)*7;x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+    ctx.strokeStyle='rgba(224,0,168,.09)';ctx.lineWidth=2;ctx.stroke();
+    recs.forEach(r=>{
+      const p=Math.sin(t*1.35+r.ph);
+      if(p>0.1){
+        ctx.beginPath();ctx.moveTo(r.x,r.y-13);ctx.lineTo(r.x,r.y-40-p*13);
+        ctx.strokeStyle=r.col;ctx.globalAlpha=p*.8;ctx.lineWidth=1.5;ctx.stroke();ctx.globalAlpha=1;
+      }
+      const gr=ctx.createRadialGradient(r.x,r.y,0,r.x,r.y,(4+p*3)*3);
+      gr.addColorStop(0,r.col+'44');gr.addColorStop(1,'transparent');
+      ctx.beginPath();ctx.arc(r.x,r.y,(4+p*3)*3,0,Math.PI*2);ctx.fillStyle=gr;ctx.globalAlpha=.35+p*.2;ctx.fill();ctx.globalAlpha=1;
+      ctx.beginPath();ctx.arc(r.x,r.y,4+p*3.5,0,Math.PI*2);
+      ctx.fillStyle=r.col;ctx.globalAlpha=.5+p*.5;ctx.fill();ctx.globalAlpha=1;
+      ctx.fillStyle='rgba(255,255,255,.45)';ctx.font='9px IBM Plex Mono,monospace';ctx.textAlign='center';
+      ctx.fillText(r.lbl,r.x,r.y+19);
+    });
+    t+=0.038;r1=requestAnimationFrame(draw);
+  }
+  draw();
+}
+
+// --- RESPONSE ---
+function pickR(type){
+  const b=document.getElementById('rbox');b.style.display='block';
+  b.style.borderLeftColor=type==='safe'?'var(--pink)':'var(--red)';
+  b.innerHTML=type==='safe'
+    ?'<strong style="color:#fff">Parasympaattinen aktivoituu.</strong> Lihastonus laskee. Kudos avautuu itsestään. Ventraalivagaalinen tila: turva, yhteys, palautuminen.'
+    :'<strong style="color:var(--red)">Sympaattinen aktivoituu.</strong> Hermosto puolustaa. Lihastonus nousee. Mitä kovempaa painat, sitä enemmän hermosto vastustaa — ei lihaksen syy.';
+}
+
+// --- SIGNAL BARS ---
+function runSig(type){
+  document.getElementById('sb1').className='sbtn'+(type==='safe'?' os':'');
+  document.getElementById('sb2').className='sbtn'+(type==='threat'?' ot':'');
+  const cfg={
+    safe:[{w:14,l:'matala',c:'var(--pink)'},{w:86,l:'syvä',c:'var(--pink)'},{w:90,l:'kyllä',c:'var(--pink)'},{w:22,l:'alhainen',c:'var(--pink)'}],
+    threat:[{w:90,l:'korkea',c:'var(--red)'},{w:14,l:'matala',c:'var(--red)'},{w:6,l:'ei',c:'var(--red)'},{w:88,l:'korkea',c:'var(--red)'}]
+  };
+  cfg[type].forEach((c,i)=>{
+    setTimeout(()=>{
+      const b=document.getElementById('b'+(i+1));b.style.width=c.w+'%';b.style.background=c.c;
+      const v=document.getElementById('v'+(i+1));v.textContent=c.l;v.style.color=c.c;
+    },i*220);
+  });
+}
+
+// --- VELOCITY SLIDER ---
+function updateVel(v){
+  v=parseInt(v);
+  const fb=document.getElementById('velFb');
+  let msg,col,bg;
+  if(v<=5){
+    msg=`${v} cm/s — C-tactile optimaali. Oksitosiinin vapautuminen, parasympaattinen aktivaatio, ventraalivagaalinen tila.`;
+    col='var(--pink)';bg='var(--psoft)';
+  } else if(v<=10){
+    msg=`${v} cm/s — Edelleen C-tactile -alueella. Miellyttävä, rauhoittava. Hieman vähemmän optimaalinen kuin 3 cm/s.`;
+    col='var(--green)';bg='var(--gsoft)';
+  } else if(v<=15){
+    msg=`${v} cm/s — Meissner aktivoituu voimakkaammin. Tarkkaavaisuus nousee. Rauhoittava vaikutus vähenee.`;
+    col='rgba(255,200,50,0.9)';bg='rgba(255,200,50,0.1)';
+  } else {
+    msg=`${v} cm/s — Liian nopea C-tactilelle. Sympaattinen viritys, puolustusreaktio. Hermosto ei tulkitse tätä turvalliseksi.`;
+    col='var(--red)';bg='var(--rsoft)';
+  }
+  fb.style.background=bg;fb.style.border=`1px solid ${col}`;fb.style.color=col;
+  fb.style.padding='12px 16px';fb.style.borderRadius='8px';
+  fb.textContent=msg;
+}
+updateVel(3);
+
+// --- KUDOSVASTEET ---
+const VV=[
+  {n:'Uppoaminen',s:'TURVA',f:'Kudos ikään kuin imaisee käden sisään',
+   d:'Hermosto on päättänyt: turvallista. Parasympaattinen aktivoituu. Lihastonus laskee automaattisesti. Golgin jänne-elimet päästävät irti.',
+   a:'Pidä rytmi ja paino samana. Älä lisää voimaa — se on tyypillisin virhe. Uppoaminen on hermoston suostumus.'},
+  {n:'Betoni',s:'EI VIELÄ',f:'Kiinteä, eloton pinta — ei työnnä pois muttei vastaanota',
+   d:'Hermosto on varautunut. Se pitää lihastonuksen vakaana. Ei vastustus — suojautuminen. Gamma-motoneuronit aktiivisia.',
+   a:'Älä paina lisää. Pysy paikallasi ja hengitä. Odota uloshengityksen syvenemistä. Hermosto arvioi sinua.'},
+  {n:'Tonus',s:'ARVIOINTI',f:'Pieni värinä tai mikrojännite lihaksen alla',
+   d:'Hermosto on arviointitilassa. Sympaattinen on läsnä mutta hallittavissa. Lihassukkulat varuillaan.',
+   a:'Hidasta rytmiä. Pehmennä oma hengityksesi. Älä päätä etukäteen mihin menet. Anna hermoston valita suunta.'},
+  {n:'Aaltoilu',s:'UUDELLEENJÄRJESTELY',f:'Kudos hengittää käden alla — avautuu ja sulkeutuu syklisesti',
+   d:'Ventraalivagaalinen palautumistila. Aivorunko, hengitys ja syke synkronoituvat. Tätä ei voi pakottaa — se syntyy kun hermosto luottaa.',
+   a:'Älä muuta mitään. Seuraa rytmiä, älä johda. Anna kudoksen johtaa sinua. Tämä on hermoston oma työ.'},
+  {n:'Ei-yhteys',s:'JÄHMETTYMINEN',f:'Eloton, tasainen, etäinen — ei vastusta eikä vastaanota',
+   d:'Dorsaalivagaalinen tila. Jähmettyminen, energiansäästö. Hermosto ei prosessoi stimulaatiota normaalisti. Trauma- tai uupumustila.',
+   a:'Älä lisää ärsykkeitä. Ole paikalla, pidä rytmi, hengitä. Turvallinen läsnäolo on ainoa oikea interventio. Voimakas stimulaatio voi uudelleentraumatisoida.'},
+];
+function buildVtabs(){
+  document.getElementById('vtabs').innerHTML=VV.map((v,i)=>
+    `<button class="vtab${i===0?' on':''}" onclick="showV(${i})">${v.n}</button>`
+  ).join('');
+}
+function showV(i){
+  document.querySelectorAll('.vtab').forEach((t,j)=>t.classList.toggle('on',j===i));
+  const v=VV[i];
+  document.getElementById('vbox').innerHTML=`
+    <div class="vstate">${v.s}</div>
+    <div class="vtitle">${v.n}</div>
+    <div class="vfeel">"${v.f}"</div>
+    <div class="vdesc">${v.d}</div>
+    <div class="vact"><strong>Mitä teet</strong>${v.a}</div>
+  `;
+}
+
+// --- QUIZ ---
+const QUIZZES=[
+  {q:'Käsi laskeutuu kudokseen ja tuntuu kuin se imaisisi käden sisään ilman voimaa. Hengitys syvenee.',opts:['Uppoaminen','Betoni','Tonus','Ei-yhteys'],correct:0,exp:'Uppoaminen = hermoston suostumus. Parasympaattinen on aktivoitunut, lihastonus laskenut automaattisesti.'},
+  {q:'Kudos on kiinteä ja tasainen. Ei virtausta, ei elävyyttä. Paino ei uppoa muttei myöskään törmää.',opts:['Aaltoilu','Betoni','Uppoaminen','Tonus'],correct:1,exp:'Betoni = "ei vielä". Hermosto arvioi. Älä paina enemmän — pysy ja hengitä.'},
+  {q:'Kudos hengittää hitaasti käden alla. Avautuu, sulkeutuu, avautuu. Käsi ei liiku mutta paino tuntuu elävältä.',opts:['Tonus','Ei-yhteys','Aaltoilu','Betoni'],correct:2,exp:'Aaltoilu = ventraalivagaalinen palautumistila. Hermosto tekee oman työnsä. Älä häiritse.'},
+];
+let qIdx=0,qAnswered=false;
+function buildQuiz(){qIdx=0;qAnswered=false;renderQuiz();}
+function renderQuiz(){
+  if(qIdx>=QUIZZES.length){
+    document.getElementById('quizWrap').innerHTML='<div class="ex-result show good">✓ Kaikki vastattu. Hyvä työ — jatka harjoittelemaan tunnistamista käytännön tilanteissa.</div>';
+    return;
+  }
+  const q=QUIZZES[qIdx];
+  document.getElementById('quizWrap').innerHTML=`
+    <div class="ex-wrap">
+      <div class="ex-title">Kysymys ${qIdx+1} / ${QUIZZES.length}</div>
+      <div class="quiz-q">${q.q}</div>
+      <div class="quiz-opts">${q.opts.map((o,i)=>`<button class="qopt" onclick="answerQ(${i})">${o}</button>`).join('')}</div>
+      <div class="quiz-exp" id="qexp">${q.exp}</div>
+    </div>`;
+  qAnswered=false;
+}
+function answerQ(i){
+  if(qAnswered)return;qAnswered=true;
+  const q=QUIZZES[qIdx];
+  const opts=document.querySelectorAll('.qopt');
+  opts[i].classList.add(i===q.correct?'correct':'wrong');
+  if(i!==q.correct)opts[q.correct].classList.add('correct');
+  document.getElementById('qexp').classList.add('show');
+  setTimeout(()=>{qIdx++;renderQuiz();},2200);
+}
+
+// --- CHECKLIST ---
+const SIGNALS=[
+  'Hengityksen rytmi','Hengityksen syvyys','Kasvojen pehmeys',
+  'Silmien ympäristö','Leuan jännite','Hartioiden asento',
+  'Painon uppoaminen','Kudosvastus','Kudoksen mikroliike',
+  'Lämpötilan muutos','Nielemisrefleksi','Mikroliike hengityksessä'
+];
+function buildChecklist(){
+  const el=document.getElementById('checklist');
+  el.innerHTML=SIGNALS.map((s,i)=>`
+    <div class="citem" id="ci${i}" onclick="toggleCheck(${i})">
+      <div class="cbox" id="cb${i}"></div>
+      <div class="ctext">${s}</div>
+    </div>`).join('');
+  updateScore();
+}
+function toggleCheck(i){
+  const el=document.getElementById('ci'+i);
+  const cb=document.getElementById('cb'+i);
+  const on=el.classList.toggle('checked');
+  cb.textContent=on?'✓':'';
+  updateScore();
+}
+function updateScore(){
+  const n=document.querySelectorAll('.citem.checked').length;
+  const t=SIGNALS.length;
+  const pct=Math.round(n/t*100);
+  let msg='';
+  if(n===0)msg='Valitse signaalit joita tunnistat jo nyt';
+  else if(pct<40)msg=`${n}/${t} — Hyvä lähtökohta. Harjoittele näitä ensin.`;
+  else if(pct<70)msg=`${n}/${t} — Vahva perusta. Syventyminen on mahdollista.`;
+  else msg=`${n}/${t} — Erinomainen havaintokyky. Jatka syventämistä.`;
+  document.getElementById('cscore').textContent=msg;
+}
+
+// --- TIMER ---
+let timerActive=false;
+function startTimer(secs,wrapId,endMsg){
+  if(timerActive)return;
+  timerActive=true;
+  const wrap=document.getElementById(wrapId);wrap.style.display='block';
+  const ring=document.getElementById('tring'+wrapId.replace('t',''));
+  const num=document.getElementById('tnum'+wrapId.replace('t',''));
+  const circ=2*Math.PI*44;
+  let remaining=secs;
+  const interval=setInterval(()=>{
+    remaining--;
+    if(num)num.textContent=remaining;
+    if(ring)ring.style.strokeDashoffset=circ*(1-remaining/secs);
+    if(remaining<=0){
+      clearInterval(interval);timerActive=false;
+      const res=document.getElementById('tres'+wrapId.replace('t',''));
+      if(res){res.textContent=endMsg;res.className='ex-result show good';}
+    }
+  },1000);
+}
+
+// --- BREATH ---
+let breathActive=false,breathInterval;
+function startBreath(){
+  if(breathActive)return;
+  breathActive=true;
+  document.getElementById('breathWrap').style.display='block';
+  const ring=document.getElementById('breathRing');
+  const phase=document.getElementById('bphase');
+  const ctr=document.getElementById('bctr');
+  const inst=document.getElementById('binst');
+  const phases=[
+    {name:'SISÄÄN',dur:4000,size:'130px',col:'var(--pink)',inst:'Hengitä sisään — tunne rintakehä laajeneva'},
+    {name:'PIDÄTÄ',dur:2000,size:'130px',col:'var(--pink)',inst:'Pidätä hetki — levollinen'},
+    {name:'ULOS',dur:6000,size:'100px',col:'rgba(224,0,168,0.4)',inst:'Hidas uloshengitys — anna painon laskea'},
+    {name:'LEPO',dur:2000,size:'100px',col:'rgba(224,0,168,0.25)',inst:'Lepoa — ennen seuraavaa'},
+  ];
+  let pi=0,round=1;
+  function nextPhase(){
+    const p=phases[pi];
+    phase.textContent=p.name;
+    ring.style.width=p.size;ring.style.height=p.size;
+    ring.style.borderColor=p.col;phase.style.color=p.col;
+    inst.textContent=p.inst;
+    ctr.textContent=`kierros ${round} / 6`;
+    pi++;
+    if(pi>=phases.length){pi=0;round++;if(round>6){breathActive=false;inst.textContent='Valmis. Tunnetko eron?';return;}}
+    breathInterval=setTimeout(nextPhase,p.dur);
+  }
+  nextPhase();
+}
+
+// --- SIGNAL SELECT ---
+function selectSignal(btn,name){
+  const res=document.getElementById('sigResult');
+  res.className='ex-result show neutral';
+  res.innerHTML=`<strong style="color:var(--pink)">✓ Valittu: ${name}</strong><br>Seuraa vain tätä signaalia kolmessa seuraavassa hoidossa. Älä tee muuta muutosta. Kirjaa lyhyesti mitä huomasit.`;
+}
+
+// --- CANVAS 4 ---
+let r4,pm='gentle';
+function togglePress(){pm=pm==='gentle'?'force':'gentle';document.getElementById('phint').textContent=pm==='gentle'?'Turvallinen kosketus':'Pakottava kosketus';}
+function c4Start(){
+  cancelAnimationFrame(r4);
+  const cv=document.getElementById('c4');if(!cv)return;
+  const ctx=cv.getContext('2d');cv.width=cv.parentElement.offsetWidth;
+  const W=cv.width,H=165;let t=0;
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    const g=pm==='gentle';
+    const tension=g?7:34,speed=g?.44:2.1,col=g?'var(--pink)':'var(--red)';
+    [.68,.8].forEach((yp,i)=>{
+      ctx.beginPath();
+      for(let x=0;x<=W;x+=3){const y=H*yp+Math.sin(x*.03+t*speed*(1-.2*i))*tension*(1-.3*i);x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+      ctx.strokeStyle=g?`rgba(224,0,168,${i===0?.6:.22})`:`rgba(255,68,68,${i===0?.6:.22})`;ctx.lineWidth=2;ctx.stroke();
+    });
+    const pulse=Math.sin(t*.9);
+    const hy=g?H*.2:H*.1;
+    const gr=ctx.createRadialGradient(W/2,hy,0,W/2,hy,28);
+    gr.addColorStop(0,g?'rgba(224,0,168,0.3)':'rgba(255,68,68,0.3)');gr.addColorStop(1,'transparent');
+    ctx.beginPath();ctx.arc(W/2,hy,28,0,Math.PI*2);ctx.fillStyle=gr;ctx.fill();
+    ctx.beginPath();ctx.arc(W/2,hy,13+pulse*2,0,Math.PI*2);
+    ctx.strokeStyle=g?'rgba(224,0,168,0.7)':'rgba(255,68,68,0.7)';ctx.lineWidth=1.5;ctx.stroke();
+    const al=g?13:45;
+    ctx.beginPath();ctx.moveTo(W/2,hy+16);ctx.lineTo(W/2,hy+16+al);
+    ctx.strokeStyle=g?'rgba(224,0,168,0.7)':'rgba(255,68,68,0.7)';ctx.lineWidth=1.5;ctx.stroke();
+    ctx.beginPath();ctx.moveTo(W/2-5,hy+12+al);ctx.lineTo(W/2,hy+18+al);ctx.lineTo(W/2+5,hy+12+al);ctx.stroke();
+    ctx.fillStyle=g?'rgba(224,0,168,0.75)':'rgba(255,68,68,0.75)';
+    ctx.font='10px IBM Plex Mono,monospace';ctx.textAlign='center';
+    ctx.fillText(g?'Turvallinen → kudos avautuu':'Pakottava → hermosto puolustaa',W/2,H-12);
+    t+=0.048;r4=requestAnimationFrame(draw);
+  }
+  draw();
+}
+
+// --- LANGUAGE QUIZ ---
+const LANGQ=[
+  {stmt:'"Tässä on selkeä lukko — vapautetaan se."',correct:false,exp:'Diagnoosi ilman asiakkaan kokemusta. Oikein: "Tämä kohta reagoi nopealla jännityksellä."'},
+  {stmt:'"Kudos pehmenee, kun kevennän."',correct:true,exp:'Oikein. Havainto ilman tulkintaa — kuvaat mitä tapahtuu.'},
+  {stmt:'"Sinulla on ärtynyt hermo tässä."',correct:false,exp:'Diagnoosi. Oikein: "Tähän koskiessa kudos reagoi herkästi — tuntuuko se teräväksi vai paineeksi?"'},
+  {stmt:'"Hidastan hieman, jotta keho ehtii mukaan."',correct:true,exp:'Oikein. Kerrot mitä teet ja miksi — asiakkaalla autonomia.'},
+  {stmt:'"Korjaan tämän kiertovirheen."',correct:false,exp:'Mekaaninen viitekehys. Oikein: "Kokeilen kevyempää suuntaa ja katson miten keho vastaa."'},
+];
+let lqIdx=0,lqAnswered=false;
+function buildLangQuiz(){lqIdx=0;lqAnswered=false;renderLQ();}
+function renderLQ(){
+  if(lqIdx>=LANGQ.length){
+    document.getElementById('langQuiz').innerHTML='<div class="ex-result show good">✓ Valmis. Ammattimainen hermostoviestintä: havainto, kokemus, toiminta — ei diagnoosi.</div>';return;
+  }
+  const q=LANGQ[lqIdx];
+  document.getElementById('langQuiz').innerHTML=`
+    <div class="ex-wrap">
+      <div class="ex-title">Lausuma ${lqIdx+1} / ${LANGQ.length} — onko tämä hyvä?</div>
+      <div class="quiz-q" style="font-style:italic;color:var(--text)">${q.stmt}</div>
+      <div style="display:flex;gap:10px;margin-top:14px">
+        <button class="ex-btn" onclick="answerLQ(true)">✓ Kyllä, hyvä</button>
+        <button class="ex-btn" style="border-color:var(--rborder);background:var(--rsoft);color:var(--red)" onclick="answerLQ(false)">✗ Ei, parantaisin</button>
+      </div>
+      <div class="quiz-exp" id="lqexp">${q.exp}</div>
+    </div>`;
+  lqAnswered=false;
+}
+function answerLQ(ans){
+  if(lqAnswered)return;lqAnswered=true;
+  const q=LANGQ[lqIdx];
+  const exp=document.getElementById('lqexp');exp.classList.add('show');
+  if(ans===q.correct)exp.style.borderLeft='2px solid var(--green)';
+  else exp.style.borderLeft='2px solid var(--red)';
+  setTimeout(()=>{lqIdx++;renderLQ();},2400);
+}
+</script>
+
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div>
+          <p class="footer-brand">FIKSIRIBU</p>
+          <p>Koulutettu hieroja Riikka Kallio</p>
+        </div>
+        <div class="footer-meta">
+          <a href="mailto:riikka@fiksiribu.fi">riikka@fiksiribu.fi</a>
+          <p>Pääkaupunkiseutu</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+
+// --- NAV ---
+const IDS=['si','s1','s2','s3','s4','s5','s6','sf'];
+let cur=0;
+function go(n){
+  IDS.forEach(id=>document.getElementById(id).classList.remove('active'));
+  document.getElementById(IDS[n]).classList.add('active');
+  cur=n;ui();window.scrollTo(0,0);
+  if(n===1)c1Start();
+  if(n===3){buildVtabs();showV(0);buildQuiz();}
+  if(n===4)buildChecklist();
+  if(n===5)c4Start();
+  if(n===6)buildLangQuiz();
+}
+function ui(){
+  document.getElementById('pb').style.width=(cur/(IDS.length-1)*100)+'%';
+  document.getElementById('ctr').textContent=(cur+1)+' / '+IDS.length;
+  document.getElementById('dots').innerHTML=IDS.map((_,i)=>{
+    const c='dot'+(i===cur?' active':i<cur?' done':'');
+    return`<button class="${c}" onclick="go(${i})"></button>`;
+  }).join('');
+}
+ui();
+
+// --- SECTION TABS ---
+function stab(el,panelId){
+  el.closest('.w').querySelectorAll('.stab').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+  el.closest('.w').querySelectorAll('.spanel').forEach(p=>p.classList.remove('on'));
+  document.getElementById(panelId).classList.add('on');
+}
+
+// --- C1 CANVAS ---
+let r1;
+function c1Start(){
+  cancelAnimationFrame(r1);
+  const cv=document.getElementById('c1');
+  const ctx=cv.getContext('2d');
+  cv.width=cv.parentElement.offsetWidth;
+  const W=cv.width,H=170;let t=0;
+  const recs=[
+    {x:W*.08,y:H*.52,col:'#d400d4',lbl:'Merkel',ph:0},
+    {x:W*.26,y:H*.44,col:'#ff66ff',lbl:'Meissner',ph:.7},
+    {x:W*.47,y:H*.54,col:'#7c88ff',lbl:'Ruffini',ph:1.4},
+    {x:W*.67,y:H*.44,col:'#55aaff',lbl:'Pacini',ph:2.1},
+    {x:W*.86,y:H*.52,col:'#ff88cc',lbl:'C-tactile',ph:2.8},
+  ];
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    ctx.beginPath();
+    for(let x=0;x<=W;x+=3){const y=H*.27+Math.sin(x*.02+t*.35)*3;x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+    ctx.strokeStyle='rgba(224,0,168,.18)';ctx.lineWidth=1;ctx.stroke();
+    ctx.beginPath();
+    for(let x=0;x<=W;x+=3){const y=H*.79+Math.sin(x*.015+t*.28)*7;x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+    ctx.strokeStyle='rgba(224,0,168,.09)';ctx.lineWidth=2;ctx.stroke();
+    recs.forEach(r=>{
+      const p=Math.sin(t*1.35+r.ph);
+      if(p>0.1){
+        ctx.beginPath();ctx.moveTo(r.x,r.y-13);ctx.lineTo(r.x,r.y-40-p*13);
+        ctx.strokeStyle=r.col;ctx.globalAlpha=p*.8;ctx.lineWidth=1.5;ctx.stroke();ctx.globalAlpha=1;
+      }
+      const gr=ctx.createRadialGradient(r.x,r.y,0,r.x,r.y,(4+p*3)*3);
+      gr.addColorStop(0,r.col+'44');gr.addColorStop(1,'transparent');
+      ctx.beginPath();ctx.arc(r.x,r.y,(4+p*3)*3,0,Math.PI*2);ctx.fillStyle=gr;ctx.globalAlpha=.35+p*.2;ctx.fill();ctx.globalAlpha=1;
+      ctx.beginPath();ctx.arc(r.x,r.y,4+p*3.5,0,Math.PI*2);
+      ctx.fillStyle=r.col;ctx.globalAlpha=.5+p*.5;ctx.fill();ctx.globalAlpha=1;
+      ctx.fillStyle='rgba(255,255,255,.45)';ctx.font='9px IBM Plex Mono,monospace';ctx.textAlign='center';
+      ctx.fillText(r.lbl,r.x,r.y+19);
+    });
+    t+=0.038;r1=requestAnimationFrame(draw);
+  }
+  draw();
+}
+
+// --- RESPONSE ---
+function pickR(type){
+  const b=document.getElementById('rbox');b.style.display='block';
+  b.style.borderLeftColor=type==='safe'?'var(--pink)':'var(--red)';
+  b.innerHTML=type==='safe'
+    ?'<strong style="color:#fff">Parasympaattinen aktivoituu.</strong> Lihastonus laskee. Kudos avautuu itsestään. Ventraalivagaalinen tila: turva, yhteys, palautuminen.'
+    :'<strong style="color:var(--red)">Sympaattinen aktivoituu.</strong> Hermosto puolustaa. Lihastonus nousee. Mitä kovempaa painat, sitä enemmän hermosto vastustaa — ei lihaksen syy.';
+}
+
+// --- SIGNAL BARS ---
+function runSig(type){
+  document.getElementById('sb1').className='sbtn'+(type==='safe'?' os':'');
+  document.getElementById('sb2').className='sbtn'+(type==='threat'?' ot':'');
+  const cfg={
+    safe:[{w:14,l:'matala',c:'var(--pink)'},{w:86,l:'syvä',c:'var(--pink)'},{w:90,l:'kyllä',c:'var(--pink)'},{w:22,l:'alhainen',c:'var(--pink)'}],
+    threat:[{w:90,l:'korkea',c:'var(--red)'},{w:14,l:'matala',c:'var(--red)'},{w:6,l:'ei',c:'var(--red)'},{w:88,l:'korkea',c:'var(--red)'}]
+  };
+  cfg[type].forEach((c,i)=>{
+    setTimeout(()=>{
+      const b=document.getElementById('b'+(i+1));b.style.width=c.w+'%';b.style.background=c.c;
+      const v=document.getElementById('v'+(i+1));v.textContent=c.l;v.style.color=c.c;
+    },i*220);
+  });
+}
+
+// --- VELOCITY SLIDER ---
+function updateVel(v){
+  v=parseInt(v);
+  const fb=document.getElementById('velFb');
+  let msg,col,bg;
+  if(v<=5){
+    msg=`${v} cm/s — C-tactile optimaali. Oksitosiinin vapautuminen, parasympaattinen aktivaatio, ventraalivagaalinen tila.`;
+    col='var(--pink)';bg='var(--psoft)';
+  } else if(v<=10){
+    msg=`${v} cm/s — Edelleen C-tactile -alueella. Miellyttävä, rauhoittava. Hieman vähemmän optimaalinen kuin 3 cm/s.`;
+    col='var(--green)';bg='var(--gsoft)';
+  } else if(v<=15){
+    msg=`${v} cm/s — Meissner aktivoituu voimakkaammin. Tarkkaavaisuus nousee. Rauhoittava vaikutus vähenee.`;
+    col='rgba(255,200,50,0.9)';bg='rgba(255,200,50,0.1)';
+  } else {
+    msg=`${v} cm/s — Liian nopea C-tactilelle. Sympaattinen viritys, puolustusreaktio. Hermosto ei tulkitse tätä turvalliseksi.`;
+    col='var(--red)';bg='var(--rsoft)';
+  }
+  fb.style.background=bg;fb.style.border=`1px solid ${col}`;fb.style.color=col;
+  fb.style.padding='12px 16px';fb.style.borderRadius='8px';
+  fb.textContent=msg;
+}
+updateVel(3);
+
+// --- KUDOSVASTEET ---
+const VV=[
+  {n:'Uppoaminen',s:'TURVA',f:'Kudos ikään kuin imaisee käden sisään',
+   d:'Hermosto on päättänyt: turvallista. Parasympaattinen aktivoituu. Lihastonus laskee automaattisesti. Golgin jänne-elimet päästävät irti.',
+   a:'Pidä rytmi ja paino samana. Älä lisää voimaa — se on tyypillisin virhe. Uppoaminen on hermoston suostumus.'},
+  {n:'Betoni',s:'EI VIELÄ',f:'Kiinteä, eloton pinta — ei työnnä pois muttei vastaanota',
+   d:'Hermosto on varautunut. Se pitää lihastonuksen vakaana. Ei vastustus — suojautuminen. Gamma-motoneuronit aktiivisia.',
+   a:'Älä paina lisää. Pysy paikallasi ja hengitä. Odota uloshengityksen syvenemistä. Hermosto arvioi sinua.'},
+  {n:'Tonus',s:'ARVIOINTI',f:'Pieni värinä tai mikrojännite lihaksen alla',
+   d:'Hermosto on arviointitilassa. Sympaattinen on läsnä mutta hallittavissa. Lihassukkulat varuillaan.',
+   a:'Hidasta rytmiä. Pehmennä oma hengityksesi. Älä päätä etukäteen mihin menet. Anna hermoston valita suunta.'},
+  {n:'Aaltoilu',s:'UUDELLEENJÄRJESTELY',f:'Kudos hengittää käden alla — avautuu ja sulkeutuu syklisesti',
+   d:'Ventraalivagaalinen palautumistila. Aivorunko, hengitys ja syke synkronoituvat. Tätä ei voi pakottaa — se syntyy kun hermosto luottaa.',
+   a:'Älä muuta mitään. Seuraa rytmiä, älä johda. Anna kudoksen johtaa sinua. Tämä on hermoston oma työ.'},
+  {n:'Ei-yhteys',s:'JÄHMETTYMINEN',f:'Eloton, tasainen, etäinen — ei vastusta eikä vastaanota',
+   d:'Dorsaalivagaalinen tila. Jähmettyminen, energiansäästö. Hermosto ei prosessoi stimulaatiota normaalisti. Trauma- tai uupumustila.',
+   a:'Älä lisää ärsykkeitä. Ole paikalla, pidä rytmi, hengitä. Turvallinen läsnäolo on ainoa oikea interventio. Voimakas stimulaatio voi uudelleentraumatisoida.'},
+];
+function buildVtabs(){
+  document.getElementById('vtabs').innerHTML=VV.map((v,i)=>
+    `<button class="vtab${i===0?' on':''}" onclick="showV(${i})">${v.n}</button>`
+  ).join('');
+}
+function showV(i){
+  document.querySelectorAll('.vtab').forEach((t,j)=>t.classList.toggle('on',j===i));
+  const v=VV[i];
+  document.getElementById('vbox').innerHTML=`
+    <div class="vstate">${v.s}</div>
+    <div class="vtitle">${v.n}</div>
+    <div class="vfeel">"${v.f}"</div>
+    <div class="vdesc">${v.d}</div>
+    <div class="vact"><strong>Mitä teet</strong>${v.a}</div>
+  `;
+}
+
+// --- QUIZ ---
+const QUIZZES=[
+  {q:'Käsi laskeutuu kudokseen ja tuntuu kuin se imaisisi käden sisään ilman voimaa. Hengitys syvenee.',opts:['Uppoaminen','Betoni','Tonus','Ei-yhteys'],correct:0,exp:'Uppoaminen = hermoston suostumus. Parasympaattinen on aktivoitunut, lihastonus laskenut automaattisesti.'},
+  {q:'Kudos on kiinteä ja tasainen. Ei virtausta, ei elävyyttä. Paino ei uppoa muttei myöskään törmää.',opts:['Aaltoilu','Betoni','Uppoaminen','Tonus'],correct:1,exp:'Betoni = "ei vielä". Hermosto arvioi. Älä paina enemmän — pysy ja hengitä.'},
+  {q:'Kudos hengittää hitaasti käden alla. Avautuu, sulkeutuu, avautuu. Käsi ei liiku mutta paino tuntuu elävältä.',opts:['Tonus','Ei-yhteys','Aaltoilu','Betoni'],correct:2,exp:'Aaltoilu = ventraalivagaalinen palautumistila. Hermosto tekee oman työnsä. Älä häiritse.'},
+];
+let qIdx=0,qAnswered=false;
+function buildQuiz(){qIdx=0;qAnswered=false;renderQuiz();}
+function renderQuiz(){
+  if(qIdx>=QUIZZES.length){
+    document.getElementById('quizWrap').innerHTML='<div class="ex-result show good">✓ Kaikki vastattu. Hyvä työ — jatka harjoittelemaan tunnistamista käytännön tilanteissa.</div>';
+    return;
+  }
+  const q=QUIZZES[qIdx];
+  document.getElementById('quizWrap').innerHTML=`
+    <div class="ex-wrap">
+      <div class="ex-title">Kysymys ${qIdx+1} / ${QUIZZES.length}</div>
+      <div class="quiz-q">${q.q}</div>
+      <div class="quiz-opts">${q.opts.map((o,i)=>`<button class="qopt" onclick="answerQ(${i})">${o}</button>`).join('')}</div>
+      <div class="quiz-exp" id="qexp">${q.exp}</div>
+    </div>`;
+  qAnswered=false;
+}
+function answerQ(i){
+  if(qAnswered)return;qAnswered=true;
+  const q=QUIZZES[qIdx];
+  const opts=document.querySelectorAll('.qopt');
+  opts[i].classList.add(i===q.correct?'correct':'wrong');
+  if(i!==q.correct)opts[q.correct].classList.add('correct');
+  document.getElementById('qexp').classList.add('show');
+  setTimeout(()=>{qIdx++;renderQuiz();},2200);
+}
+
+// --- CHECKLIST ---
+const SIGNALS=[
+  'Hengityksen rytmi','Hengityksen syvyys','Kasvojen pehmeys',
+  'Silmien ympäristö','Leuan jännite','Hartioiden asento',
+  'Painon uppoaminen','Kudosvastus','Kudoksen mikroliike',
+  'Lämpötilan muutos','Nielemisrefleksi','Mikroliike hengityksessä'
+];
+function buildChecklist(){
+  const el=document.getElementById('checklist');
+  el.innerHTML=SIGNALS.map((s,i)=>`
+    <div class="citem" id="ci${i}" onclick="toggleCheck(${i})">
+      <div class="cbox" id="cb${i}"></div>
+      <div class="ctext">${s}</div>
+    </div>`).join('');
+  updateScore();
+}
+function toggleCheck(i){
+  const el=document.getElementById('ci'+i);
+  const cb=document.getElementById('cb'+i);
+  const on=el.classList.toggle('checked');
+  cb.textContent=on?'✓':'';
+  updateScore();
+}
+function updateScore(){
+  const n=document.querySelectorAll('.citem.checked').length;
+  const t=SIGNALS.length;
+  const pct=Math.round(n/t*100);
+  let msg='';
+  if(n===0)msg='Valitse signaalit joita tunnistat jo nyt';
+  else if(pct<40)msg=`${n}/${t} — Hyvä lähtökohta. Harjoittele näitä ensin.`;
+  else if(pct<70)msg=`${n}/${t} — Vahva perusta. Syventyminen on mahdollista.`;
+  else msg=`${n}/${t} — Erinomainen havaintokyky. Jatka syventämistä.`;
+  document.getElementById('cscore').textContent=msg;
+}
+
+// --- TIMER ---
+let timerActive=false;
+function startTimer(secs,wrapId,endMsg){
+  if(timerActive)return;
+  timerActive=true;
+  const wrap=document.getElementById(wrapId);wrap.style.display='block';
+  const ring=document.getElementById('tring'+wrapId.replace('t',''));
+  const num=document.getElementById('tnum'+wrapId.replace('t',''));
+  const circ=2*Math.PI*44;
+  let remaining=secs;
+  const interval=setInterval(()=>{
+    remaining--;
+    if(num)num.textContent=remaining;
+    if(ring)ring.style.strokeDashoffset=circ*(1-remaining/secs);
+    if(remaining<=0){
+      clearInterval(interval);timerActive=false;
+      const res=document.getElementById('tres'+wrapId.replace('t',''));
+      if(res){res.textContent=endMsg;res.className='ex-result show good';}
+    }
+  },1000);
+}
+
+// --- BREATH ---
+let breathActive=false,breathInterval;
+function startBreath(){
+  if(breathActive)return;
+  breathActive=true;
+  document.getElementById('breathWrap').style.display='block';
+  const ring=document.getElementById('breathRing');
+  const phase=document.getElementById('bphase');
+  const ctr=document.getElementById('bctr');
+  const inst=document.getElementById('binst');
+  const phases=[
+    {name:'SISÄÄN',dur:4000,size:'130px',col:'var(--pink)',inst:'Hengitä sisään — tunne rintakehä laajeneva'},
+    {name:'PIDÄTÄ',dur:2000,size:'130px',col:'var(--pink)',inst:'Pidätä hetki — levollinen'},
+    {name:'ULOS',dur:6000,size:'100px',col:'rgba(224,0,168,0.4)',inst:'Hidas uloshengitys — anna painon laskea'},
+    {name:'LEPO',dur:2000,size:'100px',col:'rgba(224,0,168,0.25)',inst:'Lepoa — ennen seuraavaa'},
+  ];
+  let pi=0,round=1;
+  function nextPhase(){
+    const p=phases[pi];
+    phase.textContent=p.name;
+    ring.style.width=p.size;ring.style.height=p.size;
+    ring.style.borderColor=p.col;phase.style.color=p.col;
+    inst.textContent=p.inst;
+    ctr.textContent=`kierros ${round} / 6`;
+    pi++;
+    if(pi>=phases.length){pi=0;round++;if(round>6){breathActive=false;inst.textContent='Valmis. Tunnetko eron?';return;}}
+    breathInterval=setTimeout(nextPhase,p.dur);
+  }
+  nextPhase();
+}
+
+// --- SIGNAL SELECT ---
+function selectSignal(btn,name){
+  const res=document.getElementById('sigResult');
+  res.className='ex-result show neutral';
+  res.innerHTML=`<strong style="color:var(--pink)">✓ Valittu: ${name}</strong><br>Seuraa vain tätä signaalia kolmessa seuraavassa hoidossa. Älä tee muuta muutosta. Kirjaa lyhyesti mitä huomasit.`;
+}
+
+// --- CANVAS 4 ---
+let r4,pm='gentle';
+function togglePress(){pm=pm==='gentle'?'force':'gentle';document.getElementById('phint').textContent=pm==='gentle'?'Turvallinen kosketus':'Pakottava kosketus';}
+function c4Start(){
+  cancelAnimationFrame(r4);
+  const cv=document.getElementById('c4');if(!cv)return;
+  const ctx=cv.getContext('2d');cv.width=cv.parentElement.offsetWidth;
+  const W=cv.width,H=165;let t=0;
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    const g=pm==='gentle';
+    const tension=g?7:34,speed=g?.44:2.1,col=g?'var(--pink)':'var(--red)';
+    [.68,.8].forEach((yp,i)=>{
+      ctx.beginPath();
+      for(let x=0;x<=W;x+=3){const y=H*yp+Math.sin(x*.03+t*speed*(1-.2*i))*tension*(1-.3*i);x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+      ctx.strokeStyle=g?`rgba(224,0,168,${i===0?.6:.22})`:`rgba(255,68,68,${i===0?.6:.22})`;ctx.lineWidth=2;ctx.stroke();
+    });
+    const pulse=Math.sin(t*.9);
+    const hy=g?H*.2:H*.1;
+    const gr=ctx.createRadialGradient(W/2,hy,0,W/2,hy,28);
+    gr.addColorStop(0,g?'rgba(224,0,168,0.3)':'rgba(255,68,68,0.3)');gr.addColorStop(1,'transparent');
+    ctx.beginPath();ctx.arc(W/2,hy,28,0,Math.PI*2);ctx.fillStyle=gr;ctx.fill();
+    ctx.beginPath();ctx.arc(W/2,hy,13+pulse*2,0,Math.PI*2);
+    ctx.strokeStyle=g?'rgba(224,0,168,0.7)':'rgba(255,68,68,0.7)';ctx.lineWidth=1.5;ctx.stroke();
+    const al=g?13:45;
+    ctx.beginPath();ctx.moveTo(W/2,hy+16);ctx.lineTo(W/2,hy+16+al);
+    ctx.strokeStyle=g?'rgba(224,0,168,0.7)':'rgba(255,68,68,0.7)';ctx.lineWidth=1.5;ctx.stroke();
+    ctx.beginPath();ctx.moveTo(W/2-5,hy+12+al);ctx.lineTo(W/2,hy+18+al);ctx.lineTo(W/2+5,hy+12+al);ctx.stroke();
+    ctx.fillStyle=g?'rgba(224,0,168,0.75)':'rgba(255,68,68,0.75)';
+    ctx.font='10px IBM Plex Mono,monospace';ctx.textAlign='center';
+    ctx.fillText(g?'Turvallinen → kudos avautuu':'Pakottava → hermosto puolustaa',W/2,H-12);
+    t+=0.048;r4=requestAnimationFrame(draw);
+  }
+  draw();
+}
+
+// --- LANGUAGE QUIZ ---
+const LANGQ=[
+  {stmt:'"Tässä on selkeä lukko — vapautetaan se."',correct:false,exp:'Diagnoosi ilman asiakkaan kokemusta. Oikein: "Tämä kohta reagoi nopealla jännityksellä."'},
+  {stmt:'"Kudos pehmenee, kun kevennän."',correct:true,exp:'Oikein. Havainto ilman tulkintaa — kuvaat mitä tapahtuu.'},
+  {stmt:'"Sinulla on ärtynyt hermo tässä."',correct:false,exp:'Diagnoosi. Oikein: "Tähän koskiessa kudos reagoi herkästi — tuntuuko se teräväksi vai paineeksi?"'},
+  {stmt:'"Hidastan hieman, jotta keho ehtii mukaan."',correct:true,exp:'Oikein. Kerrot mitä teet ja miksi — asiakkaalla autonomia.'},
+  {stmt:'"Korjaan tämän kiertovirheen."',correct:false,exp:'Mekaaninen viitekehys. Oikein: "Kokeilen kevyempää suuntaa ja katson miten keho vastaa."'},
+];
+let lqIdx=0,lqAnswered=false;
+function buildLangQuiz(){lqIdx=0;lqAnswered=false;renderLQ();}
+function renderLQ(){
+  if(lqIdx>=LANGQ.length){
+    document.getElementById('langQuiz').innerHTML='<div class="ex-result show good">✓ Valmis. Ammattimainen hermostoviestintä: havainto, kokemus, toiminta — ei diagnoosi.</div>';return;
+  }
+  const q=LANGQ[lqIdx];
+  document.getElementById('langQuiz').innerHTML=`
+    <div class="ex-wrap">
+      <div class="ex-title">Lausuma ${lqIdx+1} / ${LANGQ.length} — onko tämä hyvä?</div>
+      <div class="quiz-q" style="font-style:italic;color:var(--text)">${q.stmt}</div>
+      <div style="display:flex;gap:10px;margin-top:14px">
+        <button class="ex-btn" onclick="answerLQ(true)">✓ Kyllä, hyvä</button>
+        <button class="ex-btn" style="border-color:var(--rborder);background:var(--rsoft);color:var(--red)" onclick="answerLQ(false)">✗ Ei, parantaisin</button>
+      </div>
+      <div class="quiz-exp" id="lqexp">${q.exp}</div>
+    </div>`;
+  lqAnswered=false;
+}
+function answerLQ(ans){
+  if(lqAnswered)return;lqAnswered=true;
+  const q=LANGQ[lqIdx];
+  const exp=document.getElementById('lqexp');exp.classList.add('show');
+  if(ans===q.correct)exp.style.borderLeft='2px solid var(--green)';
+  else exp.style.borderLeft='2px solid var(--red)';
+  setTimeout(()=>{lqIdx++;renderLQ();},2400);
+}
+
+  </script>
+</body>
+</html>
