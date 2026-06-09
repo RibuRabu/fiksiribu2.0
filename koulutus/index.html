@@ -126,6 +126,75 @@
       font-family: 'IBM Plex Mono', monospace;
       letter-spacing: 0.05em;
     }
+
+    .tip-box {
+      background: rgba(224,0,168,0.07);
+      border: 1px solid rgba(224,0,168,0.28);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+    }
+    .tip-input-row {
+      display: flex;
+      gap: 0.6rem;
+      margin-bottom: 0.75rem;
+    }
+    .tip-input-wrap {
+      display: flex;
+      align-items: center;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 8px;
+      padding: 0 0.75rem;
+      flex: 1;
+    }
+    .tip-currency {
+      color: rgba(255,255,255,0.5);
+      font-size: 1rem;
+      margin-right: 4px;
+    }
+    .tip-input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #fff;
+      font-size: 1.2rem;
+      font-weight: 700;
+      width: 100%;
+      padding: 0.6rem 0;
+    }
+    .tip-input::placeholder { color: rgba(255,255,255,0.25); }
+    .tip-input::-webkit-inner-spin-button,
+    .tip-input::-webkit-outer-spin-button { -webkit-appearance: none; }
+    .tip-go-btn {
+      background: #e000a8;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0 1.25rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+    .tip-go-btn:hover { background: #b800b8; }
+    .tip-presets {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .tip-preset {
+      background: transparent;
+      border: 1px solid rgba(224,0,168,0.3);
+      color: rgba(255,255,255,0.6);
+      border-radius: 999px;
+      padding: 0.3rem 0.9rem;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .tip-preset:hover { background: rgba(224,0,168,0.15); color:#fff; border-color:rgba(224,0,168,0.6); }
   </style>
   <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
@@ -192,25 +261,24 @@
 
           <!-- OIKEA: TIPPI + ALOITUS -->
           <div>
-            <article class="card tip-card">
-              <p class="eyebrow">Vapaaehtoinen</p>
-              <h2>Pidikö kurssista?</h2>
-              <p>Kurssi on ilmainen. Jos koet sen hyödylliseksi, voit jättää tekijälle kahvirahaa.</p>
-              <div class="tip-amount-row">
-                <span class="tip-amount">5 €</span>
-                <span class="tip-amount">10 €</span>
-                <span class="tip-amount">15 €</span>
-              </div>
-              <a class="button button-primary" href="https://pay.sumup.com/b2c/QYAVRY7A" target="_blank" rel="noopener" style="width:100%;text-align:center;display:block">
-                Jätä tippi ☕
-              </a>
-              <div class="start-section">
-                <a class="button button-secondary" href="./kurssi/" style="width:100%;text-align:center;display:block">
-                  Aloita kurssi ilmaiseksi →
-                </a>
-                <p>Ei maksua, ei rekisteröitymistä.</p>
-              </div>
-            </article>
+            <div class="tip-box" id="tipBox">
+      <p class="eyebrow" style="color:#e000a8">Vapaaehtoinen tippi</p>
+      <h2 style="font-size:1.4rem;margin-bottom:0.5rem">Pidikö kurssista?</h2>
+      <p style="font-size:0.9rem;color:rgba(255,255,255,0.55);margin-bottom:1.25rem">Kurssi on ilmainen. Jos koet sen hyödylliseksi, voit tukea tekijää haluamallasi summalla.</p>
+      <div class="tip-input-row">
+        <div class="tip-input-wrap">
+          <span class="tip-currency">€</span>
+          <input type="number" id="tipAmount" min="1" max="200" placeholder="10" class="tip-input">
+        </div>
+        <button class="tip-go-btn" onclick="goTip()">Maksa tippi →</button>
+      </div>
+      <div class="tip-presets">
+        <button class="tip-preset" onclick="setTip(5)">5 €</button>
+        <button class="tip-preset" onclick="setTip(10)">10 €</button>
+        <button class="tip-preset" onclick="setTip(15)">15 €</button>
+        <button class="tip-preset" onclick="setTip(20)">20 €</button>
+      </div>
+    </div>
           </div>
 
         </div>
@@ -230,5 +298,19 @@
       </div>
     </footer>
   </div>
+
+  function setTip(n) {
+    document.getElementById('tipAmount').value = n;
+    document.querySelectorAll('.tip-preset').forEach(b => {
+      b.style.background = parseInt(b.textContent) === n ? 'rgba(224,0,168,0.25)' : '';
+      b.style.color = parseInt(b.textContent) === n ? '#fff' : '';
+    });
+  }
+  function goTip() {
+    const amt = parseFloat(document.getElementById('tipAmount').value);
+    if (!amt || amt < 1) { document.getElementById('tipAmount').focus(); return; }
+    window.open('https://pay.sumup.com/b2c/QYAVRY7A', '_blank');
+  }
+
 </body>
 </html>
